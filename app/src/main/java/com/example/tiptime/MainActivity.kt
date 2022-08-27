@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.example.tiptime.databinding.ActivityMainBinding
-import org.w3c.dom.Text
-import java.lang.Double.parseDouble
-import java.lang.Float.parseFloat
 import kotlin.math.roundToInt
-import kotlin.properties.Delegates
-import kotlin.system.exitProcess
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
