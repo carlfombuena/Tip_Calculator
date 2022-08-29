@@ -40,7 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/amazing_service"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            tools:ignore="UsingOnClickInXml" />
 
 
         <RadioButton
@@ -48,14 +49,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/good_service"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            tools:ignore="UsingOnClickInXml" />
 
         <RadioButton
             android:id="@+id/option_fifteen_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ok_service"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            tools:ignore="UsingOnClickInXml" />
 
     </RadioGroup>
 
@@ -68,7 +71,8 @@
         android:text="@string/round_up_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tip_options"
-        app:layout_constraintTop_toBottomOf="@id/tip_options" />
+        app:layout_constraintTop_toBottomOf="@id/tip_options"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <Button
         android:id="@+id/calculate_button"
@@ -85,17 +89,17 @@
         android:id="@+id/tip_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tip_amount"
+        tools:text="Tip Amount: $10"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calculate_button"></TextView>
+        app:layout_constraintTop_toBottomOf="@id/calculate_button" />
 
     <TextView
         android:id="@+id/totaltip_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/totalTip_amount"
+        tools:text="Total Amount: $10"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tip_result"></TextView>
+        app:layout_constraintTop_toBottomOf="@id/tip_result" />
 </androidx.constraintlayout.widget.ConstraintLayout>
