@@ -1,51 +1,71 @@
 package com.example.tiptime
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.example.tiptime.databinding.ActivityMainBinding
 import java.text.NumberFormat
 
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var button: Button
-    private var tipState: String? = null
+    private val tipTimeState = "TIPTIME_STATE"
+    private var tipState: String? = "idle"
     private var roundState: Boolean = true
     private val amazingService = "amazing_service"
     private val goodService = "good_service"
     private val okService = "ok_service"
-
-
+    private var calculateBtn: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        button = binding.calculateButton
 
-//        if (savedInstanceState != null) {
-//
-//        }
+
+        if (savedInstanceState != null) {
+            tipState = savedInstanceState.getString(tipTimeState, "idle")
+
+        }
 //This switch changes the boolean state for rounding off the tip amount and total sale
-        //if it's true tip amount will be rounding off or else not
+        //if it's true tip amount will be rounding up or else not
         binding.roundUpSwitch.setOnCheckedChangeListener { _, isChecked ->
             roundState = isChecked
         }
 
 
 //This button trigger the function for calculating tip.
-        button.setOnClickListener {
+        binding.calculateButton.setOnClickListener {
             calculateService()
+            calculateBtn = true
         }
+        binding.costOfServiceEditText.setOnKeyListener { view, keyCode, _ ->
+            handleKeyEvent(view, keyCode)
+        }
+
     }
 
-    //    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//
-//    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(tipTimeState, tipState)
+        super.onSaveInstanceState(outState)
+
+    }
+
+    private fun handleKeyEvent(view: View, keyCode: Int): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            // Hide the keyboard
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+            return true
+        }
+        return false
+    }
+
     //This function detects the Radio button when its clicked and triggered a conditional statement
     //on which specific radio button is clicked currently there is three radio button
     //There is three condition that change the state of Tipping one for 20 percent tip,18 percent tip and 15 percent tip
@@ -88,8 +108,7 @@ class MainActivity : AppCompatActivity() {
         //This is declared value of textview and editText, EditText is for tracking the user input, Textview for showing result.
         val tipAmount = binding.tipResult
         val totalSale = binding.totaltipResult
-        val inputText = binding.costOfService.text.toString()
-        val costofService = inputText.toDoubleOrNull()
+        val costofService = binding.costOfServiceEditText.text.toString().toDoubleOrNull()
         //This if condition bellow fix the app crash when user accidentally input nothing and click calculate.
         if (costofService == null) {
             tipAmount.text = ""
@@ -139,7 +158,7 @@ abstract class TipTime(var costofService: Double) {
 
 }
 
-open class AmazingService(costofService: Double,private val round_state: Boolean) :
+open class AmazingService(costofService: Double, private val round_state: Boolean) :
     TipTime(costofService) {
     private val amazing = .20
 
@@ -159,9 +178,10 @@ open class AmazingService(costofService: Double,private val round_state: Boolean
     }
 }
 
-open class GoodService(costofService: Double,private val round_state: Boolean) : TipTime(costofService) {
+open class GoodService(costofService: Double, private val round_state: Boolean) :
+    TipTime(costofService) {
 
-   private val good = .18
+    private val good = .18
     override fun gratuity(): Double {
         return when (round_state) {
             true -> kotlin.math.ceil(costofService * good)
@@ -178,8 +198,9 @@ open class GoodService(costofService: Double,private val round_state: Boolean) :
     }
 }
 
-open class OkayService(costofService: Double,private val round_state: Boolean) : TipTime(costofService) {
-   private val okay = .15
+open class OkayService(costofService: Double, private val round_state: Boolean) :
+    TipTime(costofService) {
+    private val okay = .15
     override fun gratuity(): Double {
         return when (round_state) {
             true -> kotlin.math.ceil(costofService * okay)
