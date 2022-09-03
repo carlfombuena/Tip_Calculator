@@ -17,9 +17,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CalculatorTests {
     @get:Rule()
-    val activity= ActivityScenarioRule(MainActivity::class.java)
+    val activity = ActivityScenarioRule(MainActivity::class.java)
+
     @Test
-    fun calculate_20_percent_tip(){
+    fun calculate_20_percent_tip() {
         onView(withId(R.id.cost_of_service_edit_text))
             .perform(typeText("50.00"))
             .perform(ViewActions.closeSoftKeyboard())
@@ -36,8 +37,9 @@ class CalculatorTests {
         onView(withId(R.id.totaltip_result))
             .check(matches(withText(containsString("60.00"))))
     }
+
     @Test
-    fun calculate_18_percent_tip(){
+    fun calculate_18_percent_tip() {
         onView(withId(R.id.cost_of_service_edit_text))
             .perform(typeText("50.00"))
             .perform(ViewActions.closeSoftKeyboard())
@@ -54,8 +56,9 @@ class CalculatorTests {
         onView(withId(R.id.totaltip_result))
             .check(matches(withText(containsString("59.00"))))
     }
+
     @Test
-    fun calculate_15_percent_tip(){
+    fun calculate_15_percent_tip() {
         onView(withId(R.id.cost_of_service_edit_text))
             .perform(typeText("50.00"))
             .perform(ViewActions.closeSoftKeyboard())
@@ -65,13 +68,11 @@ class CalculatorTests {
             .check(matches(withText(containsString("8.00"))))
         onView(withId(R.id.totaltip_result))
             .check(matches(withText(containsString("58.00"))))
-       onView(withId(R.id.round_up_switch)).perform(click())
+        onView(withId(R.id.round_up_switch)).perform(click())
         onView(withId(R.id.calculate_button)).perform(click())
         onView(withId(R.id.tip_result))
             .check(matches(withText(containsString("7.50"))))
         onView(withId(R.id.totaltip_result))
             .check(matches(withText(containsString("57.50"))))
-
-
     }
 }

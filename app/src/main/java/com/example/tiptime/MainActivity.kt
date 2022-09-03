@@ -158,7 +158,7 @@ abstract class TipTime(var costofService: Double) {
 
 }
 
-open class AmazingService(costofService: Double, private val round_state: Boolean) :
+ class AmazingService(costofService: Double, private val round_state: Boolean) :
     TipTime(costofService) {
     private val amazing = .20
 
@@ -178,7 +178,7 @@ open class AmazingService(costofService: Double, private val round_state: Boolea
     }
 }
 
-open class GoodService(costofService: Double, private val round_state: Boolean) :
+ class GoodService(costofService: Double, private val round_state: Boolean) :
     TipTime(costofService) {
 
     private val good = .18
@@ -198,7 +198,7 @@ open class GoodService(costofService: Double, private val round_state: Boolean) 
     }
 }
 
-open class OkayService(costofService: Double, private val round_state: Boolean) :
+ class OkayService(costofService: Double, private val round_state: Boolean) :
     TipTime(costofService) {
     private val okay = .15
     override fun gratuity(): Double {
